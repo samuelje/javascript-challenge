@@ -45,4 +45,44 @@ function resetTable() {
             cell.attr("class", "table-style");
         });
     };
+
+    var dates = Array.from(new Set(data.map(sighting => sighting.datetime)));
+
+    dates.forEach(date => {
+        var option = dateSelect.append("option");
+        option.text(date);
+    });
 };
+
+// Function to filter data into table to match user inout of date
+function filterTable() {
+    d3.event.preventDefault();
+
+    var inputData = dataSelect.property("value");
+
+    var filteredData = data;
+
+    if (inputData) {
+        filteredData = filteredData.filter(sighting => sighting.datetime == inputData);
+    };
+
+    clearTable();
+
+    filteredData.forEach((ufoSighting) => {
+
+        var row = tbody.append("tr");
+
+        Object.values(ufoSighting).forEach(value => {
+            var cell = row.append("td");
+
+            cell.text(value);
+            cell.attr("class", "table-style");
+        });
+    });
+};
+
+resetTable();
+
+filterButton.om("click", filterTable);
+
+resetButton.on("click", resetTable);
