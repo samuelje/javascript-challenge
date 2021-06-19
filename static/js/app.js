@@ -1,5 +1,5 @@
 // from data.js
-var tableData = data;
+// var tableData = data;
 
 // Select the table body
 var tbody = d3.select("tbody");
